@@ -3,13 +3,11 @@ USE mscew_db;
 
 CREATE TABLE IF NOT EXISTS users (
 	user_id 		INT UNSIGNED NOT NULL AUTO_INCREMENT,	
-    login			VARCHAR(255) NOT NULL,			
-    email 			VARCHAR(255) NOT NULL,
+    login			VARCHAR(255) NOT NULL UNIQUE,			
+    email 			VARCHAR(255) NOT NULL UNIQUE,
     user_password	VARCHAR(255) NOT NULL,
     user_image		BLOB,
-    PRIMARY KEY 	(user_id),
-	UNIQUE			(login),
-    UNIQUE			(email)
+    PRIMARY KEY 	(user_id)
 );  
 
 CREATE TABLE IF NOT EXISTS collections (
@@ -54,7 +52,7 @@ CREATE TABLE IF NOT EXISTS songs (
     artist_id		INT UNSIGNED NOT NULL,
     song_title 		VARCHAR(255) NOT NULL,
     song_length 	LONG,					# length of the song in seconds
-    song_number		INT,					# number of the song in the album
+    song_number		INT,					# number of the song within the album
     
     PRIMARY KEY 	(song_id),
     INDEX			(album_id),
