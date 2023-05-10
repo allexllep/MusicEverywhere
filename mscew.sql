@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS songs (
     album_id 		INT UNSIGNED NOT NULL,
     artist_id		INT UNSIGNED NOT NULL,
     song_title 		VARCHAR(255) NOT NULL,
-    song_length 	LONG,					# length of the song in seconds
-    song_number		INT,					# number of the song within the album
+    song_length 	BIGINT NOT NULL,				
+    song_number		INT,				
     
     PRIMARY KEY 	(song_id),
     INDEX			(album_id),
