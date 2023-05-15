@@ -1,4 +1,4 @@
-package com.lepeshkin.servlet;
+package com.lepeshkin;
 
 import java.util.Arrays;
 

@@ -27,17 +27,16 @@ public class Album {
 	private long album_id;
 	
 	@Column(nullable = false)
-	private String album_title;
+	private String albumTitle;
 	
-	@Column(columnDefinition = "SMALLINT UNSIGNED ")
-	private short album_year;
+	@Column(columnDefinition = "SMALLINT UNSIGNED")
+	private short albumYear;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "artist_id", nullable = false)
 	private Artist artist;
 	
 	@OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "album_id")
 	private List<Song> songList = new ArrayList<>();
 	 
 	@ManyToMany(mappedBy = "albumList")

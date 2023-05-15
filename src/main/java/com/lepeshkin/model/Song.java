@@ -18,16 +18,16 @@ public class Song {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long song_id;
+	private long songId;
 	
 	@Column(nullable = false)
-	private String song_title;
+	private String songTitle;
 	
 	@Column(nullable = false)
-	private long song_length; 						// length of the song in seconds
+	private long songLength; 						// length of the song in seconds
 	
 	@Column(columnDefinition = "TINYINT UNSIGNED")
-	private short song_number; 						// number of the song within the album
+	private short songNumber; 						// number of the song within the album
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "album_id", nullable = false)
