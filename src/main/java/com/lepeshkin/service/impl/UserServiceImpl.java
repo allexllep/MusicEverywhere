@@ -1,6 +1,5 @@
 package com.lepeshkin.service.impl;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import com.lepeshkin.dao.UserRepository;
 import com.lepeshkin.exception.ResourceNotFoundException;
 import com.lepeshkin.model.User;
 import com.lepeshkin.service.UserService;
-
 
 
 @Service
@@ -31,12 +29,6 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public List<User> findAll() {
-		return userRepository.findAll();
-	}
-
-
-	@Override
 	public User findById(long id) {
 		
 //		Optional<User> user = userRepository.findById(id);
@@ -52,7 +44,7 @@ public class UserServiceImpl implements UserService{
 		return userRepository.save(
 				userRepository.findById(id).orElseThrow(() -> 
 					new ResourceNotFoundException("User", "Id", id))
-				.setEmail(user.getEmail())
+//				.setEmail(user.getEmail())
 				.setLogin(user.getLogin())
 				.setUserPassword(user.getUserPassword())
 			   );

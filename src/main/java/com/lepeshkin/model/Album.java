@@ -1,7 +1,11 @@
 package com.lepeshkin.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,16 +19,29 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
 @Entity
+@Getter
+@Setter
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "albums")
-public class Album {
+public class Album implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long album_id;
+	private long albumId;
 	
 	@Column(nullable = false)
 	private String albumTitle;
@@ -32,13 +49,15 @@ public class Album {
 	@Column(columnDefinition = "SMALLINT UNSIGNED")
 	private short albumYear;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artist_id", nullable = false)
+	@JoinColumn(name = "artistId", nullable = false)
 	private Artist artist;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Song> songList = new ArrayList<>();
+	private List<Song> albumSongs = new ArrayList<>();
 	 
-	@ManyToMany(mappedBy = "albumList")
-	private List<Collection> collectionList;
+	@ManyToMany(mappedBy = "collectionsAlbums", cascade = CascadeType.ALL)
+	private List<Collection> albumCollections;
 }

@@ -1,5 +1,9 @@
 package com.lepeshkin.model;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,12 +13,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
 @Entity
+@Getter
+@Setter
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="songs")
-public class Song {
+public class Song implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +46,9 @@ public class Song {
 	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private short songNumber; 						// number of the song within the album
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "album_id", nullable = false)
 	private Album album;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artist_id", nullable = false)
-	private Artist artist;
 }
