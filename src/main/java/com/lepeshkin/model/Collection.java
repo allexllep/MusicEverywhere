@@ -44,15 +44,15 @@ public class Collection implements Serializable{
 	@Column(nullable = false, unique = true)
 	private String collectionTitle;
 	
-	@JsonBackReference	
+	@JsonBackReference(value = "ref_user_collections")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", nullable = false)
 	private User user;
 
 	@ManyToMany
 	@JoinTable( name = "albums_collections", 
-				joinColumns = @JoinColumn(name = "collectionId", referencedColumnName = "collectionId"),
-				inverseJoinColumns = @JoinColumn(name = "albumId", referencedColumnName = "albumId"))
+				joinColumns = @JoinColumn(name = "collectionId"),
+				inverseJoinColumns = @JoinColumn(name = "albumId"))
 	private List<Album> collectionsAlbums = new ArrayList<>();
 
 }

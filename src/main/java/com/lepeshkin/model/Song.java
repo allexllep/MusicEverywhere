@@ -46,7 +46,7 @@ public class Song implements Serializable{
 	@Column(columnDefinition = "TINYINT UNSIGNED")
 	private short songNumber; 						// number of the song within the album
 	
-	@JsonBackReference
+	@JsonBackReference(value = "ref_album_songs")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "album_id", nullable = false)
 	private Album album;

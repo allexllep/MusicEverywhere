@@ -41,13 +41,13 @@ public class User implements Serializable{
 	@Column(nullable = false, unique = true)
 	private String login;
 	
-//	@Column(nullable = false, unique = true)
-//	private String email;
+	@Column(nullable = false, unique = true)
+	private String email;
 	
 	@Column(nullable = false)
 	private String userPassword;	
 
-	@JsonManagedReference
+	@JsonManagedReference(value = "ref_user_collections")
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Collection> userCollections = new ArrayList<>();
 	

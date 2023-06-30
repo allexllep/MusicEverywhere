@@ -1,6 +1,7 @@
 package com.lepeshkin.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lepeshkin.model.Album;
+import com.lepeshkin.model.Collection;
 import com.lepeshkin.service.AlbumService;
 
 @RestController
-@RequestMapping("{artistId}/album")
+@RequestMapping("/{artistId}/album")
 public class AlbumController {
 
 	private AlbumService albumService;
@@ -30,9 +32,9 @@ public class AlbumController {
 		return new ResponseEntity<Album>(albumService.save(artistId, album), HttpStatus.OK);
 	}
 	
-	@PostMapping("{albumId}")
-	public ResponseEntity<Album> addToCollectionById(@PathVariable("albumId") Long albumId, @RequestBody Long collectionId){
-		return new ResponseEntity<Album>(albumService.addToCollectionById(albumId, collectionId), HttpStatus.OK);
+	@PostMapping(value = "/{albumId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Album> addToCollectionById(@PathVariable("albumId") Long albumId, @RequestBody Collection collection){
+		return new ResponseEntity<Album>(albumService.addToCollectionById(albumId, collection), HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")

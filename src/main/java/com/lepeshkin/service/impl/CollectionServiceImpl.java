@@ -54,8 +54,7 @@ public class CollectionServiceImpl implements CollectionService{
 		return collectionRepository.save(
 				collectionRepository.findById(id).orElseThrow(() ->
 						new ResourceNotFoundException("Collection", "Id", id))
-				.setCollectionTitle(collection.getCollectionTitle())
-				);
+				.setCollectionTitle(collection.getCollectionTitle()));
 	}
 
 	@Override

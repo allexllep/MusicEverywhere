@@ -8,6 +8,7 @@ import com.lepeshkin.dao.CollectionRepository;
 import com.lepeshkin.exception.ResourceNotFoundException;
 import com.lepeshkin.model.Album;
 import com.lepeshkin.model.Artist;
+import com.lepeshkin.model.Collection;
 import com.lepeshkin.service.AlbumService;
 
 @Service
@@ -31,7 +32,7 @@ public class AlbumServiceImp implements AlbumService{
 		Artist artist = artistRepository.findById(artistId).orElseThrow(() -> 
 							new ResourceNotFoundException("Artist", "Id", artistId));
 		
-		album.setArtist(artist).getAlbumCollections();
+		album.setArtist(artist).getAlbumsCollections();
 		
 		Album newAlbum = albumRepository.save(album);
 		
@@ -48,10 +49,11 @@ public class AlbumServiceImp implements AlbumService{
 
 	@Override
 	public Album update(Long id, Album album) {
-		return albumRepository.findById(id).orElseThrow(() -> 
-					new ResourceNotFoundException("Album", "Id", id))
-				.setAlbumTitle(album.getAlbumTitle())
-				.setAlbumYear(album.getAlbumYear());
+		return albumRepository.save(
+					albumRepository.findById(id).orElseThrow(() -> 
+						new ResourceNotFoundException("Album", "Id", id))
+					.setAlbumTitle(album.getAlbumTitle())
+					.setAlbumYear(album.getAlbumYear()));
 	}
 
 	@Override
@@ -61,14 +63,19 @@ public class AlbumServiceImp implements AlbumService{
 	}
 
 	@Override
-	public Album addToCollectionById(Long albumId, Long collectionId) {
+	public Album addToCollectionById(Long albumId, Collection clientCollection) {
 		
 		Album album = albumRepository.findById(albumId).orElseThrow(() -> 
-						new ResourceNotFoundException("Album", "Id", albumId));
+							new ResourceNotFoundException("Album", "Id", albumId));
 		
-		collectionReposotory.findById(collectionId).orElseThrow(() -> 
-			new ResourceNotFoundException("Collection", "Id", collectionId))
-		.getCollectionsAlbums().add(album);
+		Collection collection = collectionReposotory.findById(clientCollection.getCollectionId()).orElseThrow(() -> 
+									new ResourceNotFoundException("Collection", "Id", clientCollection.getCollectionId()));
+
+		album.getAlbumsCollections().add(collection);
+		collection.getCollectionsAlbums().add(album);
+		
+		albumRepository.save(album);
+		collectionReposotory.save(collection);
 		
 		return album;
 	}
