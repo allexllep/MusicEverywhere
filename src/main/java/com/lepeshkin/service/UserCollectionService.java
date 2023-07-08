@@ -15,5 +15,7 @@ public interface UserCollectionService {
 	UserCollection update(Long id, UserCollection collection);
 	
 	void delete(Long id);
+	
+	UserCollection addAlbumToCollectionById(Long collectionId, Long albumId);
 
 }

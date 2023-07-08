@@ -17,7 +17,7 @@ import com.lepeshkin.entity.UserCollection;
 import com.lepeshkin.service.UserCollectionService;
 
 @RestController
-@RequestMapping("users/{userId}/collections")
+@RequestMapping("users/{userId}/collections/")
 public class UserCollectionController {
 	
 	private UserCollectionService userCollectionService;
@@ -30,6 +30,11 @@ public class UserCollectionController {
 	@PostMapping
 	public ResponseEntity<UserCollection> save(@PathVariable("userId") Long userId, @RequestBody UserCollection userCollection){
 		return new ResponseEntity<UserCollection>(userCollectionService.save(userId, userCollection), HttpStatus.CREATED);
+	}
+	
+	@PostMapping("{collectionId}/artists/albums/{albumId}")
+	public ResponseEntity<UserCollection> addAlbumToCollectionById(@PathVariable("collectionId") Long userCollectionId, @PathVariable("albumId") Long albumId){
+		return new ResponseEntity<UserCollection>(userCollectionService.addAlbumToCollectionById(userCollectionId, albumId), HttpStatus.OK);
 	}
 	
 	@GetMapping

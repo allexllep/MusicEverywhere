@@ -4,11 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.lepeshkin.entity.Album;
 import com.lepeshkin.entity.Artist;
-import com.lepeshkin.entity.UserCollection;
 import com.lepeshkin.exception.ResourceNotFoundException;
 import com.lepeshkin.repository.AlbumRepository;
 import com.lepeshkin.repository.ArtistRepository;
-import com.lepeshkin.repository.UserCollectionRepository;
 import com.lepeshkin.service.AlbumService;
 
 @Service
@@ -16,14 +14,11 @@ public class AlbumServiceImp implements AlbumService{
 
 	private AlbumRepository albumRepository;
 	private ArtistRepository artistRepository;
-	private UserCollectionRepository collectionReposotory;
 
-	public AlbumServiceImp(AlbumRepository albumRepository, ArtistRepository artistRepository,
-			UserCollectionRepository collectionReposotory) {
+	public AlbumServiceImp(AlbumRepository albumRepository, ArtistRepository artistRepository) {
 		super();
 		this.albumRepository = albumRepository;
 		this.artistRepository = artistRepository;
-		this.collectionReposotory = collectionReposotory;
 	}
 
 	@Override
@@ -61,23 +56,4 @@ public class AlbumServiceImp implements AlbumService{
 		albumRepository.deleteById(id);
 		
 	}
-
-	@Override
-	public Album addAlbumToCollectionById(Long albumId, Long collectionId) {
-		
-		Album album = albumRepository.findById(albumId).orElseThrow(() -> 
-							new ResourceNotFoundException("Album", "Id", albumId));
-		
-		UserCollection collection = collectionReposotory.findById(collectionId).orElseThrow(() -> 
-									new ResourceNotFoundException("Collection", "Id", collectionId));
-
-		album.getAlbumsCollections().add(collection);
-		collection.getCollectionsAlbums().add(album);
-		
-		albumRepository.save(album);
-		collectionReposotory.save(collection);
-		
-		return album;
-	}
-
 }

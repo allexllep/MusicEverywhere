@@ -30,11 +30,6 @@ public class AlbumController {
 		return new ResponseEntity<Album>(albumService.save(artistId, album), HttpStatus.OK);
 	}
 	
-	@PostMapping("albums/{albumId}/collections/{collectionId}/add")
-	public ResponseEntity<Album> addAlbumToCollectionById(@PathVariable("albumId") Long albumId, @PathVariable("collectionId") Long userCollectionId){
-		return new ResponseEntity<Album>(albumService.addAlbumToCollectionById(albumId, userCollectionId), HttpStatus.OK);
-	}
-	
 	@GetMapping("albums/{albumId}")
 	public ResponseEntity<Album> findById(@PathVariable("albumId") Long albumId){
 		return new ResponseEntity<Album>(albumService.findById(albumId), HttpStatus.OK);
