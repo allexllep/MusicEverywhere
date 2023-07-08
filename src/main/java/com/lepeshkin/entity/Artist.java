@@ -1,4 +1,4 @@
-package com.lepeshkin.model;
+package com.lepeshkin.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User implements Serializable{
+@Table(name = "artists")
+public class Artist implements Serializable{
 
 	/**
 	 * 
@@ -36,19 +36,16 @@ public class User implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long userId;
-
-	@Column(nullable = false, unique = true)
-	private String login;
-	
-	@Column(nullable = false, unique = true)
-	private String email;
+	private long artistId;
 	
 	@Column(nullable = false)
-	private String userPassword;	
-
-	@JsonManagedReference(value = "ref_user_collections")
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Collection> userCollections = new ArrayList<>();
+	private String artistName;
 	
+	@Column
+	private String country;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Album> artistAlbums = new ArrayList<>();
+
 }

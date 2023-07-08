@@ -2,11 +2,11 @@ package com.lepeshkin.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.lepeshkin.dao.AlbumRepository;
-import com.lepeshkin.dao.SongRepository;
+import com.lepeshkin.entity.Album;
+import com.lepeshkin.entity.Song;
 import com.lepeshkin.exception.ResourceNotFoundException;
-import com.lepeshkin.model.Album;
-import com.lepeshkin.model.Song;
+import com.lepeshkin.repository.AlbumRepository;
+import com.lepeshkin.repository.SongRepository;
 import com.lepeshkin.service.SongService;
 
 @Service

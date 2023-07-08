@@ -2,9 +2,9 @@ package com.lepeshkin.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.lepeshkin.dao.ArtistRepository;
+import com.lepeshkin.entity.Artist;
 import com.lepeshkin.exception.ResourceNotFoundException;
-import com.lepeshkin.model.Artist;
+import com.lepeshkin.repository.ArtistRepository;
 import com.lepeshkin.service.ArtistService;
 
 @Service

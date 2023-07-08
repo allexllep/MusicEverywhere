@@ -1,4 +1,4 @@
-package com.lepeshkin.model;
+package com.lepeshkin.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,5 +64,5 @@ public class Album implements Serializable{
 	 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "collectionsAlbums", cascade = CascadeType.ALL)
-	private List<Collection> albumsCollections = new ArrayList<>();
+	private List<UserCollection> albumsCollections = new ArrayList<>();
 }

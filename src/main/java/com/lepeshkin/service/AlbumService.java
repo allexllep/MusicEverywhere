@@ -1,7 +1,6 @@
 package com.lepeshkin.service;
 
-import com.lepeshkin.model.Album;
-import com.lepeshkin.model.Collection;
+import com.lepeshkin.entity.Album;
 
 public interface AlbumService {
 
@@ -14,6 +13,6 @@ public interface AlbumService {
 
 	void delete(Long id);
 	
-	Album addToCollectionById(Long albumId, Collection collection);
+	Album addAlbumToCollectionById(Long albumId, Long collectionId);
 	
 }

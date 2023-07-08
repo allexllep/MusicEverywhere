@@ -1,7 +1,6 @@
 package com.lepeshkin.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lepeshkin.model.Album;
-import com.lepeshkin.model.Collection;
+import com.lepeshkin.entity.Album;
 import com.lepeshkin.service.AlbumService;
 
 @RestController
-@RequestMapping("/{artistId}/album")
+@RequestMapping("artists/")
 public class AlbumController {
 
 	private AlbumService albumService;
@@ -27,29 +25,29 @@ public class AlbumController {
 		this.albumService = albumService;
 	}
 
-	@PostMapping
+	@PostMapping("{artistId}/albums")
 	public ResponseEntity<Album> save(@PathVariable("artistId") Long artistId, @RequestBody Album album){
 		return new ResponseEntity<Album>(albumService.save(artistId, album), HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/{albumId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Album> addToCollectionById(@PathVariable("albumId") Long albumId, @RequestBody Collection collection){
-		return new ResponseEntity<Album>(albumService.addToCollectionById(albumId, collection), HttpStatus.OK);
+	@PostMapping("albums/{albumId}/collections/{collectionId}/add")
+	public ResponseEntity<Album> addAlbumToCollectionById(@PathVariable("albumId") Long albumId, @PathVariable("collectionId") Long userCollectionId){
+		return new ResponseEntity<Album>(albumService.addAlbumToCollectionById(albumId, userCollectionId), HttpStatus.OK);
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<Album> findById(@PathVariable("id") Long id){
-		return new ResponseEntity<Album>(albumService.findById(id), HttpStatus.OK);
+	@GetMapping("albums/{albumId}")
+	public ResponseEntity<Album> findById(@PathVariable("albumId") Long albumId){
+		return new ResponseEntity<Album>(albumService.findById(albumId), HttpStatus.OK);
 	}
 	
-	@PutMapping("{id}")
-	public ResponseEntity<Album> update(@PathVariable("id") Long id, @RequestBody Album album){
-		return new ResponseEntity<Album>(albumService.update(id, album), HttpStatus.OK);
+	@PutMapping("albums/{albumId}")
+	public ResponseEntity<Album> update(@PathVariable("albumId") Long albumId, @RequestBody Album album){
+		return new ResponseEntity<Album>(albumService.update(albumId, album), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<Album> delete(@PathVariable("id") Long id){
-		albumService.delete(id);
+	@DeleteMapping("albums/{albumId}")
+	public ResponseEntity<Album> delete(@PathVariable("albumId") Long albumId){
+		albumService.delete(albumId);
 		return new ResponseEntity<Album>(HttpStatus.OK);
 	}
 	

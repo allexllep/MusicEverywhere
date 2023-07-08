@@ -11,39 +11,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lepeshkin.model.User;
+import com.lepeshkin.entity.User;
 import com.lepeshkin.service.UserService;
 
 @RestController
-@RequestMapping
+@RequestMapping("{users}")
 public class UserController {
 
 	private UserService userService;
-
 
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
 	}
 	
-	@PostMapping("registration")
+	@PostMapping
 	public ResponseEntity<User> save(@RequestBody User user){
 		return new ResponseEntity<User>(userService.save(user), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("login/{userId}")
-	public ResponseEntity<User> findById(@PathVariable("userId") Long id) {
-		return new ResponseEntity<User>(userService.findById(id),HttpStatus.OK);	
+	@GetMapping("{userId}")
+	public ResponseEntity<User> findById(@PathVariable("userId") Long userId) {
+		return new ResponseEntity<User>(userService.findById(userId),HttpStatus.OK);	
 	}
 	
 	@PutMapping("{userId}")
-	public ResponseEntity<User> update(@PathVariable("userId") Long id, @RequestBody User user){
-		return new ResponseEntity<User>(userService.update(user, id), HttpStatus.OK);
+	public ResponseEntity<User> update(@PathVariable("userId") Long userId, @RequestBody User user){
+		return new ResponseEntity<User>(userService.update(userId, user), HttpStatus.OK);
 	}
 
 	@DeleteMapping("{userId}")
-	public ResponseEntity<User> delete(@PathVariable("userId") Long id) {
-		userService.delete(id);
+	public ResponseEntity<User> delete(@PathVariable("userId") Long userId) {
+		userService.delete(userId);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}
 }

@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lepeshkin.model.Artist;
+import com.lepeshkin.entity.Artist;
 import com.lepeshkin.service.ArtistService;
 
 @RestController
-@RequestMapping("artist")
+@RequestMapping("artists")
 public class ArtistController {
 
 	private ArtistService artistService;
@@ -30,18 +30,18 @@ public class ArtistController {
 		return new ResponseEntity<Artist>(artistService.save(artist), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<Artist> finById(@PathVariable("id") Long id){
+	@GetMapping("{artistId}")
+	public ResponseEntity<Artist> finById(@PathVariable("artistId") Long id){
 		return new ResponseEntity<Artist>(artistService.findById(id), HttpStatus.OK);
 	}
 	
-	@PutMapping("{id}")
-	public ResponseEntity<Artist> update(@PathVariable("id") Long id, @RequestBody Artist artist){
+	@PutMapping("{artistId}")
+	public ResponseEntity<Artist> update(@PathVariable("artistId") Long id, @RequestBody Artist artist){
 		return new ResponseEntity<Artist>(artistService.update(id, artist), HttpStatus.OK);	
 	}	
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<Artist> delete(@PathVariable("id") Long id){
+	@DeleteMapping("{artistId}")
+	public ResponseEntity<Artist> delete(@PathVariable("artistId") Long id){
 		artistService.delete(id);
 		return new ResponseEntity<Artist>(HttpStatus.OK);
 	}

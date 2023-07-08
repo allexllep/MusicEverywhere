@@ -1,8 +1,6 @@
-package com.lepeshkin.model;
+package com.lepeshkin.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -13,8 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -29,8 +25,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "collections")
-public class Collection implements Serializable{
+@Table(name="songs")
+public class Song implements Serializable{
 
 	/**
 	 * 
@@ -39,20 +35,20 @@ public class Collection implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long collectionId;
+	private long songId;
 	
-	@Column(nullable = false, unique = true)
-	private String collectionTitle;
+	@Column(nullable = false)
+	private String songTitle;
 	
-	@JsonBackReference(value = "ref_user_collections")
+	@Column(nullable = false)
+	private long songLength; 						// length of the song in seconds
+	
+	@Column(columnDefinition = "TINYINT UNSIGNED")
+	private short songNumber; 						// number of the song within the album
+	
+	@JsonBackReference(value = "ref_album_songs")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", nullable = false)
-	private User user;
-
-	@ManyToMany
-	@JoinTable( name = "albums_collections", 
-				joinColumns = @JoinColumn(name = "collectionId"),
-				inverseJoinColumns = @JoinColumn(name = "albumId"))
-	private List<Album> collectionsAlbums = new ArrayList<>();
-
+	@JoinColumn(name = "album_id", nullable = false)
+	private Album album;
+	
 }

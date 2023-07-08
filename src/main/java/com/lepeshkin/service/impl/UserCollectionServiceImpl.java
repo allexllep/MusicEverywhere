@@ -4,32 +4,32 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lepeshkin.dao.CollectionRepository;
-import com.lepeshkin.dao.UserRepository;
+import com.lepeshkin.entity.UserCollection;
+import com.lepeshkin.entity.User;
 import com.lepeshkin.exception.ResourceNotFoundException;
-import com.lepeshkin.model.Collection;
-import com.lepeshkin.model.User;
-import com.lepeshkin.service.CollectionService;
+import com.lepeshkin.repository.UserCollectionRepository;
+import com.lepeshkin.repository.UserRepository;
+import com.lepeshkin.service.UserCollectionService;
 
 @Service
-public class CollectionServiceImpl implements CollectionService{
+public class UserCollectionServiceImpl implements UserCollectionService{
 
-	private CollectionRepository collectionRepository;
+	private UserCollectionRepository collectionRepository;
 	private UserRepository userRepository;
 	
-	public CollectionServiceImpl(CollectionRepository collectionRepository, UserRepository userRepository) {
+	public UserCollectionServiceImpl(UserCollectionRepository collectionRepository, UserRepository userRepository) {
 		super();
 		this.collectionRepository = collectionRepository;
 		this.userRepository = userRepository;
 	}
 
 	@Override
-	public Collection save(Long userId, Collection collection) {	
+	public UserCollection save(Long userId, UserCollection collection) {	
 		
 		User user = userRepository.findById(userId).orElseThrow(() ->
 						new ResourceNotFoundException("User", "UserId", userId));
 		
-		Collection newCollection = collectionRepository.save(collection.setUser(user));
+		UserCollection newCollection = collectionRepository.save(collection.setUser(user));
 		
 		user.getUserCollections().add(newCollection);	
 		
@@ -37,20 +37,20 @@ public class CollectionServiceImpl implements CollectionService{
 	}
 	
 	@Override
-	public List<Collection> findAllByUserId(Long userId){
+	public List<UserCollection> findAllByUserId(Long userId){
 		return userRepository.findById(userId).orElseThrow(() -> 
 					new ResourceNotFoundException("User", "Id", userId))
 				.getUserCollections();
 	}
 	
 	@Override
-	public Collection findById(Long id) {
+	public UserCollection findById(Long id) {
 		return collectionRepository.findById(id).orElseThrow(() -> 
 				new ResourceNotFoundException("Collection", "Id", id));
 	}
 
 	@Override
-	public Collection update(Long id, Collection collection) {
+	public UserCollection update(Long id, UserCollection collection) {
 		return collectionRepository.save(
 				collectionRepository.findById(id).orElseThrow(() ->
 						new ResourceNotFoundException("Collection", "Id", id))

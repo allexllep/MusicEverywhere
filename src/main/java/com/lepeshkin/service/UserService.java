@@ -1,14 +1,14 @@
 package com.lepeshkin.service;
 
-import com.lepeshkin.model.User;
+import com.lepeshkin.entity.User;
 
 public interface UserService {
 	
 	User save(User user);
 	
-	User findById(long id);
+	User findById(Long id);
 	
-	User update(User user, Long id);
+	User update(Long id, User user);
 	
-	void delete(long id);
+	void delete(Long id);
 }

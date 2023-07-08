@@ -1,6 +1,6 @@
 package com.lepeshkin.service;
 
-import com.lepeshkin.model.Song;
+import com.lepeshkin.entity.Song;
 
 public interface SongService{
 

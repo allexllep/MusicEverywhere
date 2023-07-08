@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lepeshkin.model.Song;
+import com.lepeshkin.entity.Song;
 import com.lepeshkin.service.SongService;
 
 @RestController
-@RequestMapping("{artistId}/{albumId}/song")
+@RequestMapping("artists/albums/")
 public class SongController {
 
 	private SongService songService;
@@ -25,24 +25,24 @@ public class SongController {
 		this.songService = songService;
 	}
 	
-	@PostMapping
+	@PostMapping("{albumId}/songs")
 	public ResponseEntity<Song> save(@PathVariable("albumId") Long albumId, @RequestBody Song song){
 		return new ResponseEntity<Song>(songService.save(albumId, song), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<Song> findById(@PathVariable("id") Long id){
-		return new ResponseEntity<Song>(songService.findById(id), HttpStatus.OK);	
+	@GetMapping("songs/{songId}")
+	public ResponseEntity<Song> findById(@PathVariable("songId") Long songId){
+		return new ResponseEntity<Song>(songService.findById(songId), HttpStatus.OK);	
 	}
 	
-	@PutMapping("{id}")
-	public ResponseEntity<Song> update(@PathVariable("id") Long id, @RequestBody Song song){
-		return new ResponseEntity<Song>(songService.update(id, song), HttpStatus.OK);
+	@PutMapping("songs/{songId}")
+	public ResponseEntity<Song> update(@PathVariable("songId") Long songId, @RequestBody Song song){
+		return new ResponseEntity<Song>(songService.update(songId, song), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<Song> delete(@PathVariable("id") Long id){
-		songService.delete(id);
+	@DeleteMapping("songs/{songId}")
+	public ResponseEntity<Song> delete(@PathVariable("songId") Long songId){
+		songService.delete(songId);
 		return new ResponseEntity<Song>(HttpStatus.OK);
 	}
 }

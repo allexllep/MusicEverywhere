@@ -1,6 +1,6 @@
 package com.lepeshkin.service;
 
-import com.lepeshkin.model.Artist;
+import com.lepeshkin.entity.Artist;
 
 public interface ArtistService {
 

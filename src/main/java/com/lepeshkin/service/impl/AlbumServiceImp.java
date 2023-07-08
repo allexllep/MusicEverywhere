@@ -2,13 +2,13 @@ package com.lepeshkin.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.lepeshkin.dao.AlbumRepository;
-import com.lepeshkin.dao.ArtistRepository;
-import com.lepeshkin.dao.CollectionRepository;
+import com.lepeshkin.entity.Album;
+import com.lepeshkin.entity.Artist;
+import com.lepeshkin.entity.UserCollection;
 import com.lepeshkin.exception.ResourceNotFoundException;
-import com.lepeshkin.model.Album;
-import com.lepeshkin.model.Artist;
-import com.lepeshkin.model.Collection;
+import com.lepeshkin.repository.AlbumRepository;
+import com.lepeshkin.repository.ArtistRepository;
+import com.lepeshkin.repository.UserCollectionRepository;
 import com.lepeshkin.service.AlbumService;
 
 @Service
@@ -16,10 +16,10 @@ public class AlbumServiceImp implements AlbumService{
 
 	private AlbumRepository albumRepository;
 	private ArtistRepository artistRepository;
-	private CollectionRepository collectionReposotory;
+	private UserCollectionRepository collectionReposotory;
 
 	public AlbumServiceImp(AlbumRepository albumRepository, ArtistRepository artistRepository,
-			CollectionRepository collectionReposotory) {
+			UserCollectionRepository collectionReposotory) {
 		super();
 		this.albumRepository = albumRepository;
 		this.artistRepository = artistRepository;
@@ -63,13 +63,13 @@ public class AlbumServiceImp implements AlbumService{
 	}
 
 	@Override
-	public Album addToCollectionById(Long albumId, Collection clientCollection) {
+	public Album addAlbumToCollectionById(Long albumId, Long collectionId) {
 		
 		Album album = albumRepository.findById(albumId).orElseThrow(() -> 
 							new ResourceNotFoundException("Album", "Id", albumId));
 		
-		Collection collection = collectionReposotory.findById(clientCollection.getCollectionId()).orElseThrow(() -> 
-									new ResourceNotFoundException("Collection", "Id", clientCollection.getCollectionId()));
+		UserCollection collection = collectionReposotory.findById(collectionId).orElseThrow(() -> 
+									new ResourceNotFoundException("Collection", "Id", collectionId));
 
 		album.getAlbumsCollections().add(collection);
 		collection.getCollectionsAlbums().add(album);
